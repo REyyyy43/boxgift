@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>¡Feliz Cumpleaños! ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #0b0b0e;
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient glowing background circles (After Hours Red & Dark Vibe) */
+        .ambient-glow-1 {
+            position: fixed;
+            top: -100px;
+            left: -50px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(9, 57, 229, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(40px);
+            animation: pulseGlow 8s infinite alternate ease-in-out;
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            bottom: -80px;
+            right: -50px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(0, 7, 139, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(50px);
+            animation: pulseGlow 10s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.6; }
+            100% { transform: scale(1.3) translate(20px, 30px); opacity: 0.9; }
+        }
+
+        /* Main Mobile Viewport Frame */
+        .mobile-container {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            padding: 24px 20px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .header-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #0931e5;
+            font-weight: 700;
+            margin-bottom: 6px;
+            background: rgba(9, 75, 229, 0.12);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(9, 31, 229, 0.3);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #ffffff 30%, #bbbbbb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Photo Frame Section with Loop Fade Animation */
+        .photo-card {
+            width: 100%;
+            height: 320px;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(9, 24, 229, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 24px;
+            background: #141418;
+        }
+
+        .photo-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out, transform 6s ease-out;
+            transform: scale(1.05);
+        }
+
+        .photo-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 16px 12px;
+            background: linear-gradient(to top, rgba(11, 11, 14, 0.9) 0%, rgba(11, 11, 14, 0) 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            z-index: 2;
+        }
+
+        .photo-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #092ee5;
+            width: 16px;
+            border-radius: 10px;
+        }
+
+        /* Spotify Player Widget */
+        .spotify-card {
+            background: rgba(20, 20, 26, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 18px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            transition: border-color 0.4s ease;
+        }
+
+        .spotify-card.playing {
+            border-color: rgba(9, 31, 229, 0.4);
+            box-shadow: 0 10px 30px rgba(9, 24, 229, 0.15);
+        }
+
+        .track-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .album-art-wrap {
+            position: relative;
+            width: 58px;
+            height: 58px;
+            flex-shrink: 0;
+        }
+
+        .album-art {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.5s ease;
+        }
+
+        /* Vinyl Spin Effect when playing */
+        .album-art-wrap.spinning::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 14px;
+            border: 2px solid #092ae5;
+            animation: borderPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes borderPulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .track-details {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .track-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-artist {
+            font-size: 0.82rem;
+            color: #a0a0ab;
+            margin-top: 2px;
+        }
+
+        /* Equalizer Animation Bars */
+        .equalizer {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 18px;
+        }
+
+        .eq-bar {
+            width: 3px;
+            background-color: #0923e5;
+            border-radius: 2px;
+            height: 4px;
+            transition: height 0.2s ease;
+        }
+
+        .playing .eq-bar:nth-child(1) { animation: eq 0.8s infinite ease-in-out alternate; }
+        .playing .eq-bar:nth-child(2) { animation: eq 1.1s infinite ease-in-out alternate 0.2s; }
+        .playing .eq-bar:nth-child(3) { animation: eq 0.7s infinite ease-in-out alternate 0.4s; }
+        .playing .eq-bar:nth-child(4) { animation: eq 0.9s infinite ease-in-out alternate 0.1s; }
+
+        @keyframes eq {
+            0% { height: 4px; }
+            100% { height: 18px; }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 14px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #0d09e5, #4d65ff);
+            border-radius: 2px;
+            transition: width 0.1s linear;
+        }
+
+        .time-stamps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: #71717a;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* Player Controls */
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #a0a0ab;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s, transform 0.1s;
+        }
+
+        .control-btn:active {
+            transform: scale(0.9);
+        }
+
+        .play-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #0931e5;
+            color: #ffffff;
+            box-shadow: 0 6px 16px rgba(9, 27, 229, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            background: #0d18f4;
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Birthday Romantic Message Card (Reveals on Play / Scroll) */
+        .message-card {
+            background: linear-gradient(145deg, rgba(26, 26, 36, 0.8), rgba(18, 18, 24, 0.9));
+            border-radius: 20px;
+            padding: 24px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .message-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0940e5;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .message-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #d1d1d6;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .message-highlight {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #ffffff;
+            text-align: right;
+            margin-top: 10px;
+            background: linear-gradient(90deg, #ffffff, #99b1ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Floating Hearts Particles */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(9, 38, 229, 0.6);
+            font-size: 16px;
+            animation: floatHeart 4s linear forwards;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="mobile-container">
+        
+        <!-- Header -->
+        <header>
+            <span class="header-tag">Special Edition</span>
+            <h1>Felices 20s Amor</h1>
+        </header>
+
+        <!-- Photo Loop Section -->
+        <div class="photo-card" id="photoCard">
+            <img class="photo-slide active" src="foto-1.jpeg" alt="Foto 1">
+            <img class="photo-slide" src="foto-2.jpeg" alt="Foto 2">
+            <img class="photo-slide" src="foto-3.jpeg" alt="Foto 3">
+            <img class="photo-slide" src="foto-5.jpeg" alt="Foto 5">
+            <img class="photo-slide" src="foto-6.jpeg" alt="Foto 6">
+            <img class="photo-slide" src="foto-7.jpeg" alt="Foto 7">
+            <img class="photo-slide" src="foto-8.jpeg" alt="Foto 8">
+            <img class="photo-slide" src="foto-9.jpeg" alt="Foto 9">
+            <img class="photo-slide" src="foto-10.jpeg" alt="Foto 10">
+            <img class="photo-slide" src="foto-11.jpeg" alt="Foto 11">
+            <img class="photo-slide" src="foto-12.jpeg" alt="Foto 12">
+
+            <div class="photo-overlay">
+                <div class="photo-dots" id="photoDots"></div>
+            </div>
+        </div>
+
+        <!-- Spotify Audio Player Card -->
+        <div class="spotify-card" id="spotifyCard">
+            <div class="track-info">
+                <div class="album-art-wrap" id="albumArtWrap">
+                    <!-- Album Cover Art -->
+                    <img src="omar.png" alt="After Hours Album Cover" class="album-art" id="albumArt">
+                </div>
+                <div class="track-details">
+                    <div class="track-title">WOOHOH</div>
+                    <div class="track-artist">Omar Courtz x Roa</div>
+                </div>
+                <div class="equalizer">
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBarFill"></div>
+                </div>
+                <div class="time-stamps">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">00:58</span>
+                </div>
+            </div>
+
+            <!-- Player Controls -->
+            <div class="player-controls">
+                <button class="control-btn" id="prevBtn" title="Anterior">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                </button>
+                <button class="control-btn play-btn" id="playBtn" title="Reproducir">
+                    <svg id="playIcon" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    <svg id="pauseIcon" width="24" height="24" fill="currentColor" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                </button>
+                <button class="control-btn" id="nextBtn" title="Siguiente">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Romantic Message Card Revealed after playing audio -->
+        <div class="message-card" id="messageCard">
+            <div class="message-header">
+                <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Para Ti</span>
+            </div>
+            <p class="message-text">
+               No hay mucho que decir en este día, mas que gracias por todo este tiempo y en esta nueva etapa que espero compartir contigo este llna de exitos, que puedas cumplir tus sueños y que no importa la edad que tengas seguiras siendo mi princesa, felices 20 amor espero te gusten tus regalos. Deseo que este nuevo año esté lleno de paz, sueños cumplidos y muchísimos momentos felices.
+            </p>
+            <div class="message-highlight">
+                Te amo. ❤️
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Audio Tag -->
+    <!-- NOTA: Reemplaza 'after_hours.mp3' con la ruta real o enlace directo del archivo de audio -->
+    <audio id="audioPlayer" src="OMAR%20COURTZ%20ousi%20ROA%20-%20WO.mp3"></audio>
+
+    <script>
+        // Photo Loop Logic
+        const slides = document.querySelectorAll('.photo-slide');
+        const photoDots = document.getElementById('photoDots');
+
+        slides.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = `dot${index === 0 ? ' active' : ''}`;
+            photoDots.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+        const slideInterval = 3500; // 3.5 segundos por foto
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (dots[i]) dots[i].classList.remove('active');
+            });
+            if (slides[index]) {
+                slides[index].classList.add('active');
+            }
+            if (dots[index]) dots[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        setInterval(nextSlide, slideInterval);
+
+        // Spotify Audio Logic
+        const audio = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playBtn');
+        const playIcon = document.getElementById('playIcon');
+        const pauseIcon = document.getElementById('pauseIcon');
+        const spotifyCard = document.getElementById('spotifyCard');
+        const albumArtWrap = document.getElementById('albumArtWrap');
+        const progressBarFill = document.getElementById('progressBarFill');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
+        const messageCard = document.getElementById('messageCard');
+        const heartsContainer = document.getElementById('heartsContainer');
+
+        let messageRevealed = false;
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                    spotifyCard.classList.add('playing');
+                    albumArtWrap.classList.add('spinning');
+                    startHearts();
+
+                    // Revelar mensaje romántico después de 3 segundos de reproducción
+                    if (!messageRevealed) {
+                        setTimeout(() => {
+                            messageCard.classList.add('visible');
+                            messageCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            messageRevealed = true;
+                        }, 3000);
+                    }
+                }).catch(err => {
+                    console.log("Audio play error: ", err);
+                    // Fallback visual si el navegador bloquea auto-audio sin interacción
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                    spotifyCard.classList.add('playing');
+                    albumArtWrap.classList.add('spinning');
+                    startHearts();
+                    if (!messageRevealed) {
+                        setTimeout(() => {
+                            messageCard.classList.add('visible');
+                            messageRevealed = true;
+                        }, 1500);
+                    }
+                });
+            } else {
+                audio.pause();
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+                spotifyCard.classList.remove('playing');
+                albumArtWrap.classList.remove('spinning');
+                stopHearts();
+            }
+        }
+
+        playBtn.addEventListener('click', togglePlay);
+
+        // Actualizar barra de progreso y tiempo
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const progressPercent = (audio.currentTime / audio.duration) * 100;
+                progressBarFill.style.width = `${progressPercent}%`;
+                
+                // Formatear min:seg
+                const curMins = Math.floor(audio.currentTime / 60);
+                const curSecs = Math.floor(audio.currentTime % 60);
+                currentTimeEl.textContent = `${curMins}:${curSecs < 10 ? '0' : ''}${curSecs}`;
+
+                const durMins = Math.floor(audio.duration / 60);
+                const durSecs = Math.floor(audio.duration % 60);
+                durationEl.textContent = `${durMins}:${durSecs < 10 ? '0' : ''}${durSecs}`;
+            }
+        });
+
+        // Click en la barra de progreso para buscar punto de canción
+        document.getElementById('progressContainer').addEventListener('click', (e) => {
+            const width = e.currentTarget.clientWidth;
+            const clickX = e.offsetX;
+            if (audio.duration) {
+                audio.currentTime = (clickX / width) * audio.duration;
+            }
+        });
+
+        // Animación de Corazones Flotantes
+        let heartInterval;
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '💙';
+            heart.style.left = Math.random() * 90 + 5 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = Math.random() * 12 + 14 + 'px';
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        function startHearts() {
+            if (!heartInterval) {
+                heartInterval = setInterval(createHeart, 600);
+            }
+        }
+
+        function stopHearts() {
+            clearInterval(heartInterval);
+            heartInterval = null;
+        }
+    </script>
+</body>
+</html>
